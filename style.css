@@ -1,10 +1,11 @@
 #board {
-  height: 100vh; /*just for editing i need to see the whole board*/
-  width: 100vw;
+  height: 95vh; /*just for editing i need to see the whole board*/
+  width: 95vw;
   display: grid;
   grid-template-columns: 2fr repeat(9, 1fr) 2fr;
   grid-template-rows: 2fr repeat(9, 1fr) 2fr;
-  background-color: grey;
+  background-color: lightgrey;
+  margin: 10px;
 }
 #center {
   display: grid;
@@ -24,6 +25,7 @@
   grid-column: 1;
   grid-row: 2/11;
 }
+
 #row-top {
   display: flex;
 
@@ -64,18 +66,53 @@
 #column-right > div {
   flex: auto;
 }
-div {
+#board div {
   height: 1fr;
   border: solid 2px black;
 }
-.active-players {
+img {
   height: 50px;
   width: 50px;
 }
-button > img {
+/* .display-of-ongoing-events > img {
   height: 100px;
   width: 100px;
-}
+} */
 body {
   text-transform: capitalize;
+}
+.blue {
+  background-color: blue;
+  color: white;
+}
+.green {
+  background-color: green;
+  color: white;
+}
+.orange {
+  background-color: orange;
+}
+.light-purple {
+  background-color: purple;
+  color: white;
+}
+.purple {
+  background-color: indigo;
+  color: white;
+}
+.light-blue {
+  background-color: lightskyblue;
+}
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+}
+.black {
+  background-color: black;
+  color: white;
+}
+.white {
+  background-color: white;
 }
