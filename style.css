@@ -116,3 +116,12 @@ body {
 .white {
   background-color: white;
 }
+.light-yellow {
+  background-color: rgb(255, 255, 130);
+}
+.dark-orange {
+  background-color: darkgoldenrod;
+}
+.beige {
+  background-color: beige;
+}

@@ -516,6 +516,9 @@ const displayBoard = document.querySelector(".display-of-ongoing-events");
 const showPropertyBtn = document.getElementById("show-players-properties");
 const playerProperties = document.getElementById("player-properties");
 const playerNameInput = document.getElementById("player-name-input");
+const center = document.getElementById("center");
+const newGameBtn = document.getElementById("new-game-button");
+
 let activePlayers = [];
 let i = 1;
 let activePlayer = {};
@@ -580,7 +583,7 @@ function setArrayOfActivePlayers() {
 }
 
 function removePlayersFromMiddleOfBoard() {
-  displayBoard.innerHTML = "";
+  center.removeChild(displayBoard);
 }
 
 function findActivePlayer() {
@@ -794,6 +797,16 @@ function renderPlayerCards() {
     </div>`;
   }
 }
+
+function resetGame() {
+  if (
+    confirm(`  WARNING!!!!
+  Are You Sure You Want to Reset The Game??????`)
+  ) {
+    document.location.reload();
+  }
+}
+
 displayBoard.addEventListener("click", function (e) {
   try {
     choosePlayer(e.target.closest("img[data-name]").dataset.name);
@@ -822,3 +835,4 @@ nextBtn.addEventListener("click", function () {
   showActivePlayer(findActivePlayer());
   resetDiceRoll();
 });
+newGameBtn.addEventListener("click", resetGame);
