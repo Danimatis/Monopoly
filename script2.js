@@ -5,7 +5,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: null,
+    turn: 0,
     active: false,
     playerName: null,
   },
@@ -15,7 +15,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: null,
+    turn: 0,
     active: false,
     playerName: null,
   },
@@ -25,7 +25,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: null,
+    turn: 0,
     active: false,
     playerName: null,
   },
@@ -35,7 +35,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: null,
+    turn: 0,
     active: false,
     playerName: null,
   },
@@ -45,7 +45,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: null,
+    turn: 0,
     active: false,
     playerName: null,
   },
@@ -55,12 +55,12 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: null,
+    turn: 0,
     active: false,
     playerName: null,
   },
 ];
-const landingSquares = [
+const landingTiles = [
   {
     name: "Mediterranean Avenue",
     type: "purple",
@@ -467,7 +467,7 @@ const landingSquares = [
   },
   {
     name: "Electric Company",
-    type: "utilities",
+    type: "utility",
     price: 150,
     rent: 4,
     twoUtilities: 10,
@@ -478,7 +478,7 @@ const landingSquares = [
   },
   {
     name: "Water Works ",
-    type: "utilities",
+    type: "utility",
     price: 150,
     rent: 4,
     twoUtilities: 10,
@@ -487,23 +487,24 @@ const landingSquares = [
     owned: false,
     owner: "",
   },
-  { name: "GO", squareNumber: 1, owned: true },
-  { name: "JAIL", squareNumber: 11, owned: true },
-  { name: "FREE PARKING", squareNumber: 21, owned: true, money: null },
-  { name: "GO TO JAIL", squareNumber: 31, owned: true },
-  { name: "Chance", squareNumber: 8, owned: true },
-  { name: "Chance", squareNumber: 23, owned: true },
-  { name: "Chance", squareNumber: 37, owned: true },
-  { name: "Community Chest", squareNumber: 3, owned: true },
-  { name: "Community Chest", squareNumber: 18, owned: true },
-  { name: "Community Chest", squareNumber: 34, owned: true },
+  { name: "GO", type: "go", squareNumber: 1 },
+  { name: "JAIL", type: "jail", squareNumber: 11 },
+  { name: "FREE PARKING", type: "parking", squareNumber: 21, money: 500 },
+  { name: "GO TO JAIL", type: "go to jail", squareNumber: 31 },
+  { name: "Chance", type: "chance", squareNumber: 8 },
+  { name: "Chance", type: "chance", squareNumber: 23 },
+  { name: "Chance", type: "chance", squareNumber: 37 },
+  { name: "Community Chest", type: "chest", squareNumber: 3 },
+  { name: "Community Chest", type: "chest", squareNumber: 18 },
+  { name: "Community Chest", type: "chest", squareNumber: 34 },
   {
     name: "Income Tax",
-    priceA: 0.1,
-    priceB: 200,
+    type: "income tax",
+    priceA: 200,
+    priceB: -0.1,
     squareNumber: 5,
   },
-  { name: "Luxury Tax", price: 75, squareNumber: 39 },
+  { name: "Luxury Tax", type: "luxury tax", price: 75, squareNumber: 39 },
 ];
 const body = document.querySelector("body");
 const goSquare = document.getElementById("corner-right-bottom");
@@ -515,7 +516,6 @@ const displayBoard = document.querySelector(".display-of-ongoing-events");
 const showPropertyBtn = document.getElementById("show-players-properties");
 const playerProperties = document.getElementById("player-properties");
 const playerNameInput = document.getElementById("player-name-input");
-const setPlayerNameBtn = document.getElementById("set-player-name-button");
 let activePlayers = [];
 let i = 1;
 let activePlayer = {};
@@ -539,8 +539,18 @@ function placePlayer(player) {
   goSquare.innerHTML += `<img class="active-players" src=${player.image}></img>`;
 }
 
-function settNameOfPlayer(player) {
-  player.playerName = playerNameInput.value;
+function askForName() {
+  let name = prompt("What's Your Name");
+  return name;
+}
+
+function setNameOfPlayer(character) {
+  for (const player of players) {
+    if (character === player.name) {
+      player.playerName = askForName();
+    }
+  }
+  console.log(player.playerName);
 }
 
 function showRoll(roll) {
@@ -585,7 +595,7 @@ function activateTurn(player) {
 }
 
 function showActivePlayer(player) {
-  displayBoard.innerHTML = `<h1>It's the ${player.name}'s Turn</h1>`;
+  displayBoard.innerHTML = `<h1>It's ${player.playerName}'s Turn</h1>`;
 }
 
 function nextPlayerTurn() {
@@ -617,6 +627,17 @@ function changePositionOfPlayer(roll) {
   movePlayer(player);
 }
 
+function goToJail() {
+  let player = findActivePlayer();
+  let squarePosition = document.querySelector(
+    `div[data-id="${player.position}"]`
+  );
+  let imageToRemove = document.querySelector(`img[src="${player.image}"]`);
+  squarePosition.removeChild(imageToRemove);
+  player.position = 11;
+  movePlayer(player);
+}
+
 function movePlayer(player) {
   // let position = player.position;
   let squarePosition = document.querySelector(
@@ -627,29 +648,33 @@ function movePlayer(player) {
 
 function checkPropertyLandedOn() {
   let player = findActivePlayer();
-  for (const square of landingSquares) {
-    if (square.squareNumber === player.position) {
-      return square;
+  for (const tile of landingTiles) {
+    if (tile.squareNumber === player.position) {
+      return tile;
     }
   }
 }
 function interactWithLandingSquare() {
-  let square = checkPropertyLandedOn();
+  let tile = checkPropertyLandedOn();
   let player = findActivePlayer();
-  if (square.owned) {
-    player.money = player.money - square.rent;
-  } else {
-    player.money = player.money - square.price;
-    square.owned = true;
-    player.properties.push(square);
+  if (tile.owned) {
+    alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
+    player.money = player.money - tile.rent;
+    for (const player of activePlayers) {
+      if (player.playerName === tile.owner) {
+        player.money += tile.rent;
+      }
+    }
+  } else if (confirm(`Do You Want To Buy ${tile.name}`)) {
+    player.money = player.money - tile.price;
+    tile.owned = true;
+    tile.owner = player.playerName;
+    player.properties.push(tile);
     console.log(player);
   }
 }
-function getLastPlayerInArray() {
-  return activePlayers[activePlayers.length - 1];
-}
-function getAllPropertiesOfPlayer() {
-  const player = findActivePlayer();
+
+function getAllPropertiesOfPlayer(player) {
   let properties = "<ul>";
   if (player.properties) {
     for (const property of player.properties) {
@@ -660,42 +685,122 @@ function getAllPropertiesOfPlayer() {
   return properties;
 }
 function showPlayersProperties() {
-  const player = findActivePlayer();
-
-  playerProperties.innerHTML = `<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title fs-5" id="modal-title">${player.name}</h1>
-      <img class="active-players" src= ${player.image}></img>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="modal-body">Money: $${
-      player.money
-    } <br> Properties: ${getAllPropertiesOfPlayer()}</div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-secondary"
-        data-bs-dismiss="modal"
-      >
-        Close
-      </button>
-    </div>
+  for (const player of activePlayers) {
+    playerProperties.innerHTML += `<div class="card" style="width: 18rem">
+  <div class="card-body">
+    <h5 class="card-title">
+    ${player.playerName} <img src="${player.image}" alt="" />
+    </h5>
+    <h6>Money: $${player.money} </h6>
+    <h6>Properties:</h6>
+    ${getAllPropertiesOfPlayer(player)}
   </div>
 </div>`;
+  }
 }
 
+function findFreeParking() {
+  for (const tile of landingTiles) {
+    if (tile.name === "FREE PARKING") {
+      return tile;
+    }
+  }
+}
+function process() {
+  let tile = checkPropertyLandedOn();
+  let player = findActivePlayer();
+  if (tile.type === "chance") {
+  } else if (tile.type === "chest") {
+  } else if (tile.type === "go") {
+    alert(`You Just Landed on GO, receive $400!!`);
+    player.money += 400;
+  } else if (tile.type === "go to jail") {
+    alert(`Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!`);
+    goToJail();
+  } else if (tile.type === "parking") {
+    alert(`WOW, You Are Lucky, You get $${tile.money} From the Pot`);
+    player.money += tile.money;
+    tile.money = 500;
+  } else if (tile.type === "jail") {
+    alert("Just Visiting");
+  } else if (tile.type === "luxury tax") {
+    alert(`Landed on Luxury Tax, Pay to the Pot $75`);
+    player.money -= 75;
+    findFreeParking().money += 75;
+  } else if (tile.type === "income tax") {
+    if (
+      confirm(
+        `Landed on Income Tax, If You wish to Pay $200,  Click OK, If You Want to Pay 10% of Your Money, Click Cancel`
+      )
+    ) {
+      player.money -= tile.priceA;
+      alert(`You Paid $200`);
+    } else {
+      player.money += Math.floor(player.money * tile.priceB);
+      alert(`You Paid $${-Math.floor(player.money * tile.priceB)}`);
+    }
+  } else if (tile.type === "utility") {
+  } else if (tile.type === "railroad") {
+    if (tile.owned) {
+      alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
+      player.money = player.money - tile.rent;
+      for (const player of activePlayers) {
+        if (player.playerName === tile.owner) {
+          player.money += tile.rent;
+        }
+      }
+    } else if (
+      confirm(
+        `You Just Landed On ${tile.name}. Do You Want To Buy ${tile.name}?`
+      )
+    ) {
+      player.money = player.money - tile.price;
+      tile.owned = true;
+      tile.owner = player.playerName;
+      player.properties.push(tile);
+      console.log(player);
+    }
+  } else {
+    if (tile.owned) {
+      alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
+      player.money = player.money - tile.rent;
+      for (const player of activePlayers) {
+        if (player.playerName === tile.owner) {
+          player.money += tile.rent;
+        }
+      }
+    } else if (confirm(`Do You Want To Buy ${tile.name}`)) {
+      player.money = player.money - tile.price;
+      tile.owned = true;
+      tile.owner = player.playerName;
+      player.properties.push(tile);
+      console.log(player);
+    }
+  }
+  renderPlayerCards();
+}
+function renderPlayerCards() {
+  playerProperties.innerHTML = "";
+  for (const player of activePlayers) {
+    playerProperties.innerHTML += `<div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title">
+        ${player.playerName} <img src="${player.image}" alt="" />
+        </h5>
+        <h6>Money: $${player.money} </h6>
+        <h6>Properties:</h6>
+        ${getAllPropertiesOfPlayer(player)}
+      </div>
+    </div>`;
+  }
+}
 displayBoard.addEventListener("click", function (e) {
   try {
     choosePlayer(e.target.closest("img[data-name]").dataset.name);
     removeCharacterFromPickList(
       e.target.closest("img[data-name]").dataset.name
     );
+    setNameOfPlayer(e.target.closest("img[data-name]").dataset.name);
   } catch (error) {}
 });
 
@@ -703,23 +808,17 @@ rollBtn.addEventListener("click", function () {
   let roll = rollDice();
   showRoll(roll);
   changePositionOfPlayer(roll);
-  interactWithLandingSquare();
+  setTimeout(process, 500);
 });
 
 startBtn.addEventListener("click", () => {
   setArrayOfActivePlayers();
   removePlayersFromMiddleOfBoard();
   showActivePlayer(findActivePlayer());
-  getLastPlayerInArray();
+  showPlayersProperties();
 });
 nextBtn.addEventListener("click", function () {
   nextPlayerTurn();
   showActivePlayer(findActivePlayer());
   resetDiceRoll();
-});
-showPropertyBtn.addEventListener("click", showPlayersProperties);
-
-setPlayerNameBtn.addEventListener("click", function () {
-  settNameOfPlayer(getLastPlayerInArray());
-  console.log(activePlayers);
 });
