@@ -1029,7 +1029,9 @@ function chanceCardActivation(player) {
     let housesFee = findHousesOfPlayer(player) * 25;
     let hotelFee = findHotelsOfPlayer(player) * 100;
     let fine = housesFee + hotelFee;
-    player.money -= fine;
+    if (fine) {
+      player.money -= fine;
+    }
   } else if (card.type === "payment") {
     player.money += card.amountOfMoney;
   } else if (card.type === "paymentToPlayers") {
@@ -1057,6 +1059,9 @@ function communityChestCardActivation(player) {
     let housesFee = findHousesOfPlayer(player) * 40;
     let hotelFee = findHotelsOfPlayer(player) * 115;
     let fine = housesFee + hotelFee;
+    if (fine) {
+      player.money -= fine;
+    }
     player.money -= fine;
   } else if (card.type === "payment") {
     player.money += card.amountOfMoney;
