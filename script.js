@@ -516,7 +516,6 @@ const displayBoard = document.querySelector(".display-of-ongoing-events");
 const showPropertyBtn = document.getElementById("show-players-properties");
 const playerProperties = document.getElementById("player-properties");
 const playerNameInput = document.getElementById("player-name-input");
-const center = document.getElementById("center");
 const newGameBtn = document.getElementById("new-game-button");
 
 let activePlayers = [];
@@ -583,7 +582,8 @@ function setArrayOfActivePlayers() {
 }
 
 function removePlayersFromMiddleOfBoard() {
-  center.removeChild(displayBoard);
+  // center.removeChild(displayBoard);
+  displayBoard.innerHTML = "";
 }
 
 function findActivePlayer() {
@@ -621,7 +621,9 @@ function changePositionOfPlayer(roll) {
   let squarePosition = document.querySelector(
     `div[data-id="${player.position}"]`
   );
+  console.log(squarePosition);
   let imageToRemove = document.querySelector(`img[src="${player.image}"]`);
+  console.log(imageToRemove);
   squarePosition.removeChild(imageToRemove);
   player.position += roll;
   if (player.position > 40) {
@@ -715,19 +717,19 @@ function process() {
   if (tile.type === "chance") {
   } else if (tile.type === "chest") {
   } else if (tile.type === "go") {
-    alert(`You Just Landed on GO, receive $400!!`);
+    displayBoard.innerHTML += `You Just Landed on GO, receive $400!!`;
     player.money += 400;
   } else if (tile.type === "go to jail") {
-    alert(`Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!`);
+    displayBoard.innerHTML += `Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!`;
     goToJail();
   } else if (tile.type === "parking") {
-    alert(`WOW, You Are Lucky, You get $${tile.money} From the Pot`);
+    displayBoard.innerHTML += `WOW, You Are Lucky, You get $${tile.money} From the Pot`;
     player.money += tile.money;
     tile.money = 500;
   } else if (tile.type === "jail") {
-    alert("Just Visiting");
+    displayBoard.innerHTML += "Just Visiting";
   } else if (tile.type === "luxury tax") {
-    alert(`Landed on Luxury Tax, Pay to the Pot $75`);
+    displayBoard.innerHTML += `Landed on Luxury Tax, Pay to the Pot $75`;
     player.money -= 75;
     findFreeParking().money += 75;
   } else if (tile.type === "income tax") {

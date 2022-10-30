@@ -1,10 +1,11 @@
 #board {
-  height: 100vh; /*just for editing i need to see the whole board*/
-  width: 100vw;
+  height: 95vh;
+  width: 95vw;
   display: grid;
   grid-template-columns: 2fr repeat(9, 1fr) 2fr;
   grid-template-rows: 2fr repeat(9, 1fr) 2fr;
-  background-color: grey;
+  background-color: lightgrey;
+  margin: 10px;
 }
 #center {
   display: grid;
@@ -26,7 +27,6 @@
 }
 #row-top {
   display: flex;
-
   grid-column: 2/11;
   grid-row: 1;
 }
@@ -68,14 +68,55 @@ div {
   height: 1fr;
   border: solid 2px black;
 }
-.active-players {
+img {
   height: 50px;
   width: 50px;
 }
-button > img {
-  height: 100px;
-  width: 100px;
-}
+
 body {
   text-transform: capitalize;
+}
+.blue {
+  background-color: blue;
+  color: white;
+}
+.green {
+  background-color: green;
+  color: white;
+}
+.orange {
+  background-color: orange;
+}
+.purple {
+  background-color: purple;
+  color: white;
+}
+.indigo {
+  background-color: indigo;
+  color: white;
+}
+.light-blue {
+  background-color: lightskyblue;
+}
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+}
+.black {
+  background-color: black;
+  color: white;
+}
+.white {
+  background-color: white;
+}
+.gold {
+  background-color: gold;
+}
+.dark-goldenrod {
+  background-color: darkgoldenrod;
+}
+.beige {
+  background-color: beige;
 }

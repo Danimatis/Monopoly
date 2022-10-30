@@ -20,65 +20,34 @@
     ></script>
   </head>
   <body>
-    <button id="start-button" type="button" class="btn btn-primary">
-      Start Game
-    </button>
-    <button id="roll-button" type="button" class="btn btn-info">Roll</button>
-    <button id="next-button" type="button" class="btn btn-warning">
-      Next Player
-    </button>
-    <button
-      id="show-players-properties"
-      type="button"
-      class="btn btn-success"
-      data-bs-toggle="modal"
-      data-bs-target="#player-properties"
-    >
-      Show Players Money and Properties
-    </button>
-    <div
-      class="modal fade"
-      id="player-properties"
-      tabindex="-1"
-      aria-labelledby="player-propertiesLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modal-title"></h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="d-flex align-items-center">
+      <button id="start-button" type="button" class="btn btn-primary m-2">
+        Start Game
+      </button>
+      <button id="roll-button" type="button" class="btn btn-success m-2">
+        Roll
+      </button>
+      <button id="next-button" type="button" class="btn btn-info m-2">
+        Next Player
+      </button>
+      <button id="new-game-button" type="button" class="btn btn-danger m-2">
+        New Game
+      </button>
     </div>
     <div id="board">
-      <div id="center">
+      <div id="center" class="d-flex flex-column justify-content-around">
+       
         <div
-          class="d-flex flex-wrap align-items-center display-of-ongoing-events"
+        class="d-flex flex-wrap align-items-around justify-content-around display-of-current-player"
         >
-          <h1>Click a Piece to Place on Board</h1>
+        <div class="d-flex">
+        <h1>Click a Piece to Place on Board</h1>
           <button
             id="boot-player"
             type="button"
             class="btn"
             data-bs-toggle="modal"
-            data-bs-target="#player-name-input"
+            data-bs-target="#request-player-name"
           >
             <img data-name="boot" src="./images/monopoly-boot.jpg" alt="" />
           </button>
@@ -87,7 +56,7 @@
             type="button"
             class="btn"
             data-bs-toggle="modal"
-            data-bs-target="#player-name-input"
+            data-bs-target="#request-player-name"
           >
             <img data-name="car" src="./images/monopoly-car.png" alt="" />
           </button>
@@ -96,7 +65,7 @@
             type="button"
             class="btn"
             data-bs-toggle="modal"
-            data-bs-target="#player-name-input"
+            data-bs-target="#request-player-name"
           >
             <img data-name="dog" src="./images/monopoly-dog.png" alt="" />
           </button>
@@ -105,7 +74,7 @@
             type="button"
             class="btn"
             data-bs-toggle="modal"
-            data-bs-target="#player-name-input"
+            data-bs-target="#request-player-name"
           >
             <img data-name="hat" src="./images/monopoly-hat.png" alt="" />
           </button>
@@ -114,7 +83,7 @@
             type="button"
             class="btn"
             data-bs-toggle="modal"
-            data-bs-target="#player-name-input"
+            data-bs-target="#request-player-name"
           >
             <img data-name="horse" src="./images/monopoly-horse.png" alt="" />
           </button>
@@ -123,14 +92,14 @@
             type="button"
             class="btn"
             data-bs-toggle="modal"
-            data-bs-target="#player-name-input"
+            data-bs-target="#request-player-name"
           >
             <img data-name="train" src="./images/monopoly-train.png" alt="" />
           </button>
 
           <div
             class="modal fade"
-            id="player-name-input"
+            id="request-player-name"
             tabindex="-1"
             aria-labelledby="player-name-inputLabel"
             aria-hidden="true"
@@ -150,74 +119,192 @@
                     id="set-player-name-button"
                     type="button"
                     class="btn btn-primary"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
                     data-bs-dismiss="modal"
                   >
-                    Close
+                    Save
                   </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div id="current-property-display"></div>
         <div><h1 id="dice-roll-display">Dice Roll:</h1></div>
       </div>
-      <div data-id="21" id="corner-left-top"><h2>FREE PARKING</h2></div>
-      <div data-id="31" id="corner-right-top"><h1>GO TO JAIL</h1></div>
-      <div data-id="11" id="corner-left-bottom"><h1>JAIL</h1></div>
-      <div data-id="1" id="corner-right-bottom"><h1>GO</h1></div>
-      <div id="column-left">
-        <div data-id="12"></div>
-        <div data-id="13"></div>
-        <div data-id="14"></div>
-        <div data-id="15"></div>
-        <div data-id="16"></div>
-        <div data-id="17"></div>
-        <div data-id="18"></div>
-        <div data-id="19"></div>
-        <div data-id="20"></div>
+      <div data-id="21" class="text-center" id="corner-left-top">
+        <h2>FREE PARKING</h2>
+      </div>
+      <div data-id="31" class="text-center" id="corner-right-top">
+        <h1>GO TO JAIL</h1>
+      </div>
+      <div data-id="11" class="text-center" id="corner-left-bottom">
+        <h1>JAIL</h1>
+      </div>
+      <div data-id="1" class="text-center" id="corner-right-bottom">
+        <h1>GO</h1>
+      </div>
+      <div id="column-left" >
+        <div data-id="12" class="text-center">
+          <h6 class="purple">St. Charles Place</h6>
+        </div>
+        <div data-id="13" class="text-center">
+          <h6 class="white">Electric Company</h6>
+        </div>
+        <div data-id="14" class="text-center">
+          <h6 class="purple">States Avenue</h6>
+        </div>
+        <div data-id="15" class="text-center">
+          <h6 class="purple">Virginia Avenue</h6>
+        </div>
+        <div data-id="16" class="text-center">
+          <h6 class="black">Pennsylvania Railroad</h6>
+        </div>
+        <div data-id="17" class="text-center">
+          <h6 class="orange">St. James Avenue</h6>
+        </div>
+        <div data-id="18" class="text-center">
+          <h6 class="gold">Community Chest</h6>
+        </div>
+        <div data-id="19" class="text-center">
+          <h6 class="orange">Tennessee Avenue</h6>
+        </div>
+        <div data-id="20" class="text-center">
+          <h6 class="orange">New York Avenue</h6>
+        </div>
       </div>
       <div id="column-right">
-        <div data-id="32"></div>
-        <div data-id="33"></div>
-        <div data-id="34"></div>
-        <div data-id="35"></div>
-        <div data-id="36"></div>
-        <div data-id="37"></div>
-        <div data-id="38"></div>
-        <div data-id="39"></div>
-        <div data-id="40"></div>
+        <div data-id="32" class="text-center">
+          <h6 class="green">Pacific Avenue</h6>
+        </div>
+        <div data-id="33" class="text-center">
+          <h6 class="green">North Carolina Avenue</h6>
+        </div>
+        <div data-id="34" class="text-center">
+          <h6 class="gold">Community Chest</h6>
+        </div>
+        <div data-id="35" class="text-center">
+          <h6 class="green">Pennsylvania Avenue</h6>
+        </div>
+        <div data-id="36" class="text-center">
+          <h6 class="black">Short Line</h6>
+        </div>
+        <div data-id="37" class="text-center">
+          <h6 class="dark-goldenrod">Chance</h6>
+        </div>
+        <div data-id="38" class="text-center">
+          <h6 class="blue">Park Place</h6>
+        </div>
+        <div data-id="39" class="text-center">
+          <h6 class="beige">Luxury Tax</h6>
+        </div>
+        <div data-id="40" class="text-center">
+          <h6 class="blue">Boardwalk</h6>
+        </div>
       </div>
       <div id="row-top">
-        <div data-id="22"></div>
-        <div data-id="23"></div>
-        <div data-id="24"></div>
-        <div data-id="25"></div>
-        <div data-id="26"></div>
-        <div data-id="27"></div>
-        <div data-id="28"></div>
-        <div data-id="29"></div>
-        <div data-id="30"></div>
+        <div data-id="22" class="text-center">
+          <h6 class="red">Kentucky Avenue</h6>
+        </div>
+        <div data-id="23" class="text-center">
+          <h6 class="dark-goldenrod">Chance</h6>
+        </div>
+        <div data-id="24" class="text-center">
+          <h6 class="red">Indiana Avenue</h6>
+        </div>
+        <div data-id="25" class="text-center">
+          <h6 class="red">Illinois Avenue</h6>
+        </div>
+        <div data-id="26" class="text-center">
+          <h6 class="black">B & O Railroad</h6>
+        </div>
+        <div data-id="27" class="text-center">
+          <h6 class="yellow">Atlantic Avenue</h6>
+        </div>
+        <div data-id="28" class="text-center">
+          <h6 class="yellow">Ventnor Avenue</h6>
+        </div>
+        <div data-id="29" class="text-center">
+          <h6 class="white">Water Works</h6>
+        </div>
+        <div data-id="30" class="text-center">
+          <h6 class="yellow">Marvin Gardens</h6>
+        </div>
       </div>
       <div id="row-bottom">
-        <div data-id="2"></div>
-        <div data-id="3"></div>
-        <div data-id="4"></div>
-        <div data-id="5"></div>
-        <div data-id="6"></div>
-        <div data-id="7"></div>
-        <div data-id="8"></div>
-        <div data-id="9"></div>
-        <div
-          data-id="10
-        "
-        ></div>
+        <div data-id="2" class="text-center">
+          <h6 class="indigo">Mediterranean Avenue</h6>
+        </div>
+        <div data-id="3" class="text-center">
+          <h6 class="gold">Community Chest</h6>
+        </div>
+        <div data-id="4" class="text-center">
+          <h6 class="indigo">Baltic Avenue</h6>
+        </div>
+        <div data-id="5" class="text-center">
+          <h6 class="beige">Income Tax</h6>
+        </div>
+        <div data-id="6" class="text-center">
+          <h6 class="black">Reading Railroad</h6>
+        </div>
+        <div data-id="7" class="text-center">
+          <h6 class="light-blue">Oriental Avenue</h6>
+        </div>
+        <div data-id="8" class="text-center">
+          <h6 class="dark-goldenrod">Chance</h6>
+        </div>
+        <div data-id="9" class="text-center">
+          <h6 class="light-blue">Vermont Avenue</h6>
+        </div>
+        <div data-id="10" class="text-center">
+          <h6 class="light-blue">Connecticut Avenue</h6>
+        </div>
       </div>
     </div>
+  </div> 
+    <!-- <div id="player-properties" class="d-flex m-3"></div> -->
+
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#p">
+      Launch demo modal
+    </button>
+
+
+    <div class="modal fade" id="property" tabindex="-1" aria-labelledby="pLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="card">
+              <div class="card-header text-center" style="background:blue; color:white" >
+                Featured
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Rent $${property.rent}/li>
+                <li class="list-group-item">With One House: $${property.oneHouse}</li>
+                <li class="list-group-item">With Two Houses: $${property.twoHouses}</li>
+                <li class="list-group-item">With Three Houses: $${property.threeHouses}</li>
+                <li class="list-group-item">With Four Houses: $${property.fourHouses}</li>
+                <li class="list-group-item">With Hotel: $${property.hotel}</li>
+                <li class="list-group-item">To Buy a House Costs: $${property.buildingCosts} Per House</li>
+                <li class="list-group-item">Mortgage: $${property.mortgageValue}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+
+
+
+
+
+
+
+   
+    
   </body>
 </html>

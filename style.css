@@ -28,7 +28,6 @@
 
 #row-top {
   display: flex;
-
   grid-column: 2/11;
   grid-row: 1;
 }
@@ -74,10 +73,7 @@ img {
   height: 50px;
   width: 50px;
 }
-/* .display-of-ongoing-events > img {
-  height: 100px;
-  width: 100px;
-} */
+
 body {
   text-transform: capitalize;
 }
