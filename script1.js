@@ -848,7 +848,7 @@ function showCommunityChestCard(card) {
 function showRegularProperty() {
   let property = checkPropertyLandedOn();
   let card = `
-        <div class="card">
+        <div class="card" style="width: 18rem;">
           <div class="card-header text-center" style="background:${property.color}; color:white" >
             ${property.name}
           </div>
@@ -870,7 +870,7 @@ function showRegularProperty() {
 function showRailroad() {
   let property = checkPropertyLandedOn();
   let card = `
-  <div class="card">
+  <div class="card" style="width: 18rem;">
     <div class="card-header text-center" style="background:${property.color}; color:white" >
       ${property.name}
     </div>
@@ -889,7 +889,7 @@ function showRailroad() {
 function showUtility() {
   let property = checkPropertyLandedOn();
   let card = `
-  <div class="card">
+  <div class="card" style="width: 18rem;">
     <div class="card-header text-center" style="background:${property.color}; color:black" >
       ${property.name}
     </div>
