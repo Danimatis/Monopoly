@@ -1,11 +1,11 @@
 #board {
-  height: 95vh;
-  width: 95vw;
+  height: 780px;
+  width: 1320px;
   display: grid;
   grid-template-columns: 2fr repeat(9, 1fr) 2fr;
   grid-template-rows: 2fr repeat(9, 1fr) 2fr;
   background-color: lightgrey;
-  margin: 10px;
+  margin-top: 100px;
 }
 #center {
   display: grid;
@@ -119,4 +119,7 @@ body {
 }
 .beige {
   background-color: beige;
+}
+.fixed-top {
+  background-color: aliceblue;
 }

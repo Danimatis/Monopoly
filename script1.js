@@ -675,7 +675,7 @@ const playerProperties = document.getElementById("player-properties");
 const playerNameInput = document.getElementById("player-name-input");
 const setPlayerNameBtn = document.getElementById("set-player-name-button");
 const newGameBtn = document.getElementById("new-game-button");
-
+const actionDisplay = document.getElementById("action-display");
 let activePlayers = [];
 let i = 1;
 let activePlayer = {};
@@ -694,6 +694,21 @@ function choosePlayer(character) {
     }
   }
 }
+function disableStartBtn() {
+  startBtn.disabled = "true";
+}
+function disableRollBtn() {
+  rollBtn.disabled = "true";
+}
+function enableRollBtn() {
+  rollBtn.disabled = false;
+}
+function checkRollDouble(rollA, rollB) {
+  if (rollA !== rollB) disableRollBtn();
+  else {
+    alert("You Rolled a Double, You Get To Go Again!");
+  }
+}
 
 function placePlayer(player) {
   goSquare.innerHTML += `<img class="active-players" src=${player.image}></img>`;
@@ -710,6 +725,7 @@ function showRoll(roll) {
 function rollDice() {
   let rollA = Math.ceil(Math.random() * 6);
   let rollB = Math.ceil(Math.random() * 6);
+  checkRollDouble(rollA, rollB);
   let roll = rollA + rollB;
   return roll;
 }
@@ -846,59 +862,82 @@ function showCommunityChestCard(card) {
   currentPropertyDisplay.innerHTML = displayCard;
 }
 function showRegularProperty() {
-  let property = checkPropertyLandedOn();
+  let {
+    name,
+    color,
+    price,
+    rent,
+    hotel,
+    oneHouse,
+    twoHouses,
+    threeHouses,
+    fourHouses,
+    buildingCosts,
+    mortgageValue,
+  } = checkPropertyLandedOn();
+
   let card = `
         <div class="card" style="width: 18rem;">
-          <div class="card-header text-center" style="background:${property.color}; color:white" >
-            ${property.name}
+          <div class="card-header text-center" style="background:${color}; color:white" >
+            ${name}
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Price $${property.price}</li>
-            <li class="list-group-item">Rent $${property.rent}</li>
-            <li class="list-group-item">With One House: $${property.oneHouse}</li>
-            <li class="list-group-item">With Two Houses: $${property.twoHouses}</li>
-            <li class="list-group-item">With Three Houses: $${property.threeHouses}</li>
-            <li class="list-group-item">With Four Houses: $${property.fourHouses}</li>
-            <li class="list-group-item">With Hotel: $${property.hotel}</li>
-            <li class="list-group-item">To Buy a House Costs: $${property.buildingCosts} Per House</li>
-            <li class="list-group-item">Mortgage: $${property.mortgageValue}</li>
+            <li class="list-group-item">Price $${price}</li>
+            <li class="list-group-item">Rent $${rent}</li>
+            <li class="list-group-item">With One House: $${oneHouse}</li>
+            <li class="list-group-item">With Two Houses: $${twoHouses}</li>
+            <li class="list-group-item">With Three Houses: $${threeHouses}</li>
+            <li class="list-group-item">With Four Houses: $${fourHouses}</li>
+            <li class="list-group-item">With Hotel: $${hotel}</li>
+            <li class="list-group-item">To Buy a House Costs: $${buildingCosts} Per House</li>
+            <li class="list-group-item">Mortgage: $${mortgageValue}</li>
           </ul>
         </div>
      `;
   currentPropertyDisplay.innerHTML = card;
 }
 function showRailroad() {
-  let property = checkPropertyLandedOn();
+  let {
+    name,
+    color,
+    price,
+    rent,
+    twoRailroads,
+    threeRailroads,
+    fourRailroads,
+    mortgageValue,
+  } = checkPropertyLandedOn();
   let card = `
   <div class="card" style="width: 18rem;">
-    <div class="card-header text-center" style="background:${property.color}; color:white" >
-      ${property.name}
+    <div class="card-header text-center" style="background:${color}; color:white" >
+      ${name}
     </div>
     <ul class="list-group list-group-flush">
-    <li class="list-group-item">Price $${property.price}</li>
-      <li class="list-group-item">Rent $${property.rent}</li>
-      <li class="list-group-item">With Two Railroads Owned: $${property.twoRailroads}</li>
-      <li class="list-group-item">With Three Railroads Owned: $${property.threeRailroads}</li>
-      <li class="list-group-item">With Four Railroads Owned: $${property.fourRailroads}</li>
-      <li class="list-group-item">Mortgage: $${property.mortgageValue}</li>
+    <li class="list-group-item">Price $${price}</li>
+      <li class="list-group-item">Rent $${rent}</li>
+      <li class="list-group-item">With Two Railroads Owned: $${twoRailroads}</li>
+      <li class="list-group-item">With Three Railroads Owned: $${threeRailroads}</li>
+      <li class="list-group-item">With Four Railroads Owned: $${fourRailroads}</li>
+      <li class="list-group-item">Mortgage: $${mortgageValue}</li>
     </ul>
   </div>
 `;
   currentPropertyDisplay.innerHTML = card;
 }
 function showUtility() {
-  let property = checkPropertyLandedOn();
+  let { color, name, price, rent, twoUtilities, mortgageValue } =
+    checkPropertyLandedOn();
   let card = `
   <div class="card" style="width: 18rem;">
-    <div class="card-header text-center" style="background:${property.color}; color:black" >
-      ${property.name}
+    <div class="card-header text-center" style="background:${color}; color:black" >
+      ${name}
     </div>
     <ul class="list-group list-group-flush">
-    <li class="list-group-item">Price $${property.price}</li>
-      <li class="list-group-item">If One Utility is Owned Rent is ${property.rent} Times the Amount Rolled</li>
-      <li class="list-group-item">If Both Utilities are Owned Rent is ${property.twoUtilities} Times the Amount Rolled</li>
+    <li class="list-group-item">Price $${price}</li>
+      <li class="list-group-item">If One Utility is Owned Rent is ${rent} Times the Amount Rolled</li>
+      <li class="list-group-item">If Both Utilities are Owned Rent is ${twoUtilities} Times the Amount Rolled</li>
      
-      <li class="list-group-item">Mortgage: $${property.mortgageValue}</li>
+      <li class="list-group-item">Mortgage: $${mortgageValue}</li>
     </ul>
   </div>
 `;
@@ -912,24 +951,38 @@ function getAllPropertiesOfPlayer(player) {
   let propertyId = "a";
   if (player.properties) {
     for (const property of player.properties) {
-      properties += `<li data-bs-toggle="modal" data-bs-target="#${propertyId}">${property.name} </li> 
+      if (property.type === "property") {
+        let {
+          name,
+          color,
+          price,
+          rent,
+          hotel,
+          oneHouse,
+          twoHouses,
+          threeHouses,
+          fourHouses,
+          buildingCosts,
+          mortgageValue,
+        } = property;
+        properties += `<li data-bs-toggle="modal" data-bs-target="#${propertyId}">${name} </li> 
       <div class="modal fade" id="${propertyId}" tabindex="-1" aria-labelledby="${propertyId}Label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
             <div class="card">
-              <div class="card-header text-center" style="background:${property.color}; color:white" >
-                ${property.name}
+              <div class="card-header text-center" style="background:${color}; color:white" >
+                ${name}
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Rent $${property.rent}</li>
-                <li class="list-group-item">With One House: $${property.oneHouse}</li>
-                <li class="list-group-item">With Two Houses: $${property.twoHouses}</li>
-                <li class="list-group-item">With Three Houses: $${property.threeHouses}</li>
-                <li class="list-group-item">With Four Houses: $${property.fourHouses}</li>
-                <li class="list-group-item">With Hotel: $${property.hotel}</li>
-                <li class="list-group-item">To Buy a House Costs: $${property.buildingCosts} Per House</li>
-                <li class="list-group-item">Mortgage: $${property.mortgageValue}</li>
+                <li class="list-group-item">Rent $${rent}</li>
+                <li class="list-group-item">With One House: $${oneHouse}</li>
+                <li class="list-group-item">With Two Houses: $${twoHouses}</li>
+                <li class="list-group-item">With Three Houses: $${threeHouses}</li>
+                <li class="list-group-item">With Four Houses: $${fourHouses}</li>
+                <li class="list-group-item">With Hotel: $${hotel}</li>
+                <li class="list-group-item">To Buy a House Costs: $${buildingCosts} Per House</li>
+                <li class="list-group-item">Mortgage: $${mortgageValue}</li>
               </ul>
             </div>
           </div>
@@ -939,6 +992,72 @@ function getAllPropertiesOfPlayer(player) {
         </div>
       </div>
     </div>`;
+      } else if (property.type === "railroad") {
+        let {
+          name,
+          color,
+          price,
+          rent,
+          twoRailroads,
+          threeRailroads,
+          fourRailroads,
+          mortgageValue,
+        } = property;
+        properties += `<li data-bs-toggle="modal" data-bs-target="#${propertyId}">${name} </li> 
+        <div class="modal fade" id="${propertyId}" tabindex="-1" aria-labelledby="${propertyId}Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="card">
+                <div class="card-header text-center" style="background:${color}; color:white" >
+                  ${name}
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Price $${price}</li>
+                <li class="list-group-item">Rent $${rent}</li>
+                <li class="list-group-item">With Two Railroads Owned: $${twoRailroads}</li>
+                <li class="list-group-item">With Three Railroads Owned: $${threeRailroads}</li>
+                <li class="list-group-item">With Four Railroads Owned: $${fourRailroads}</li>
+                <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+              </ul>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+          `;
+      } else if (property.type === "utility") {
+        let { color, name, price, rent, twoUtilities, mortgageValue } =
+          property;
+        properties += `<li data-bs-toggle="modal" data-bs-target="#${propertyId}">${name} </li> 
+        <div class="modal fade" id="${propertyId}" tabindex="-1" aria-labelledby="${propertyId}Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="card">
+                <div class="card-header text-center" style="background:${color}; color:black" >
+                  ${name}
+                </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Price $${price}</li>
+                <li class="list-group-item">If One Utility is Owned Rent is ${rent} Times the Amount Rolled</li>
+                <li class="list-group-item">If Both Utilities are Owned Rent is ${twoUtilities} Times the Amount Rolled</li>
+                <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+              </ul> </div>
+              </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+                
+                `;
+      }
+
       propertyId += 1;
     }
   }
@@ -967,6 +1086,35 @@ function findFreeParking() {
     }
   }
 }
+function incomeTaxYes() {
+  let player = findActivePlayer();
+  let tile = checkPropertyLandedOn();
+
+  player.money -= tile.priceA;
+  actionDisplay.innerHTML = `You Paid $200`;
+  showPlayersProperties();
+}
+
+function incomeTaxNo() {
+  let player = findActivePlayer();
+  let tile = checkPropertyLandedOn();
+  player.money += Math.floor(player.money * tile.priceB);
+  actionDisplay.innerHTML = `You Paid $${-Math.floor(
+    player.money * tile.priceB
+  )}`;
+  showPlayersProperties();
+}
+
+function buyProperty() {
+  let player = findActivePlayer();
+  let tile = checkPropertyLandedOn();
+  player.money = player.money - tile.price;
+  tile.owned = true;
+  tile.owner = player.playerName;
+  player.properties.push(tile);
+  showPlayersProperties();
+  actionDisplay.innerHTML = "";
+}
 
 function resetGame() {
   if (
@@ -985,14 +1133,14 @@ function chanceCardActivation(player) {
   console.log(card);
 
   showChanceCard(card);
-  alert(card.name);
+  actionDisplay.innerHTML = `${card.name}`;
   if (card.type === "move") {
     removePlayerFromPosition();
     if (
       (card.positionToMove < player.position && card.positionToMove !== 11) ||
       (card.positionToMove < player.position && card.positionToMove !== 1)
     ) {
-      alert("You Passed Go Collect $200");
+      actionDisplay.innerHTML = `You Passed Go Collect $200`;
       player.money += 200;
     }
     player.position = card.positionToMove;
@@ -1002,7 +1150,7 @@ function chanceCardActivation(player) {
     removePlayerFromPosition();
     let positionToMove = findNearestRailroadPosition(player);
     if (positionToMove < player.position) {
-      alert("You Passed Go Collect $200");
+      actionDisplay.innerHTML = `You Passed Go Collect $200`;
       player.money += 200;
     }
     player.position = positionToMove;
@@ -1012,7 +1160,7 @@ function chanceCardActivation(player) {
     removePlayerFromPosition();
     let positionToMove = findNearestUtilityPosition(player);
     if (positionToMove < player.position) {
-      alert("You Passed Go Collect $200");
+      actionDisplay.innerHTML = `You Passed Go Collect $200`;
       player.money += 200;
     }
     player.position = positionToMove;
@@ -1047,7 +1195,7 @@ function communityChestCardActivation(player) {
   let card = CommunityChestCards[pickCard(CommunityChestCards)];
   console.log(card);
   showCommunityChestCard(card);
-  alert(card.name);
+  actionDisplay.innerHTML = `${card.name}`;
   if (card.type === "move") {
     removePlayerFromPosition();
     player.position = card.positionToMove;
@@ -1070,7 +1218,7 @@ function communityChestCardActivation(player) {
       onePlayer.money -= 10;
       player.money += 10;
     }
-  } else if ((card.name = "Get Out of Jail Free.")) {
+  } else if (card.name === "Get Out of Jail Free.") {
   }
 }
 function addHouse() {}
@@ -1113,6 +1261,7 @@ function goToJail() {
   player.position = 11;
   movePlayer();
 }
+
 function process() {
   let tile = checkPropertyLandedOn();
   let player = findActivePlayer();
@@ -1121,36 +1270,26 @@ function process() {
   } else if (tile.type === "chest") {
     communityChestCardActivation(player);
   } else if (tile.type === "go") {
-    alert(`You Just Landed on GO, receive $400!!`);
+    actionDisplay.innerHTML = `You Just Landed on GO, receive $400!!`;
     player.money += 200;
   } else if (tile.type === "go to jail") {
-    alert(`Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!`);
+    actionDisplay.innerHTML = `Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!`;
     goToJail();
   } else if (tile.type === "parking") {
-    alert(`WOW, You Are Lucky, You get $${tile.money} From the Pot`);
+    actionDisplay.innerHTML = `WOW, You Are Lucky, You get $${tile.money} From the Pot`;
     player.money += tile.money;
     tile.money = 500;
   } else if (tile.type === "jail") {
-    alert("Just Visiting");
+    actionDisplay.innerHTML = "Just Visiting";
   } else if (tile.type === "luxury tax") {
-    alert(`Landed on Luxury Tax, Pay to the Pot $75`);
+    actionDisplay.innerHTML = `Landed on Luxury Tax, Pay to the Pot $75`;
     player.money -= 75;
     findFreeParking().money += 75;
   } else if (tile.type === "income tax") {
-    if (
-      confirm(
-        `Landed on Income Tax, If You wish to Pay $200,  Click OK, If You Want to Pay 10% of Your Money, Click Cancel`
-      )
-    ) {
-      player.money -= tile.priceA;
-      alert(`You Paid $200`);
-    } else {
-      player.money += Math.floor(player.money * tile.priceB);
-      alert(`You Paid $${-Math.floor(player.money * tile.priceB)}`);
-    }
+    actionDisplay.innerHTML = `Landed on Income Tax, If You wish to Pay $200,  Click OK, If You Want to Pay 10% of Your Money, Click Cancel <button onclick="incomeTaxYes()">Yes</button> <button onclick="incomeTaxNo()">No</button>`;
   } else if (tile.type === "utility") {
     if (tile.owned && tile.owner !== player.playerName) {
-      alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
+      actionDisplay.innerHTML = `${player.playerName} owes ${tile.rent} to ${tile.owner}`;
       player.money = player.money - tile.rent;
       for (const player of activePlayers) {
         if (player.playerName === tile.owner) {
@@ -1158,21 +1297,14 @@ function process() {
         }
       }
     } else if (tile.owned && tile.owner === player.playerName) {
-      alert("You Landed On Your Own Property, So Nothing Happens.");
-    } else if (
-      confirm(
-        `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price}`
-      )
-    ) {
-      player.money = player.money - tile.price;
-      tile.owned = true;
-      tile.owner = player.playerName;
-      player.properties.push(tile);
-      console.log(player);
+      actionDisplay.innerHTML =
+        "You Landed On Your Own Property, So Nothing Happens.";
+    } else {
+      actionDisplay.innerHTML = `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price} <button onclick="buyProperty()">Yes</button>`;
     }
   } else if (tile.type === "railroad") {
     if (tile.owned && tile.owner !== player.playerName) {
-      alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
+      actionDisplay.innerHTML = `${player.playerName} owes ${tile.rent} to ${tile.owner}`;
       player.money = player.money - tile.rent;
       for (const player of activePlayers) {
         if (player.playerName === tile.owner) {
@@ -1180,21 +1312,14 @@ function process() {
         }
       }
     } else if (tile.owned && tile.owner === player.playerName) {
-      alert("You Landed On Your Own Property, So Nothing Happens.");
-    } else if (
-      confirm(
-        `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price}`
-      )
-    ) {
-      player.money = player.money - tile.price;
-      tile.owned = true;
-      tile.owner = player.playerName;
-      player.properties.push(tile);
-      console.log(player);
+      actionDisplay.innerHTML =
+        "You Landed On Your Own Property, So Nothing Happens.";
+    } else {
+      actionDisplay.innerHTML = `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price} <button onclick="buyProperty()">Yes</button>`;
     }
   } else {
     if (tile.owned && tile.owner !== player.playerName) {
-      alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
+      actionDisplay.innerHTML = `${player.playerName} owes ${tile.rent} to ${tile.owner}`;
       player.money = player.money - tile.rent;
       for (const player of activePlayers) {
         if (player.playerName === tile.owner) {
@@ -1202,17 +1327,10 @@ function process() {
         }
       }
     } else if (tile.owned && tile.owner === player.playerName) {
-      alert("You Landed On Your Own Property, So Nothing Happens.");
-    } else if (
-      confirm(
-        `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price}`
-      )
-    ) {
-      player.money = player.money - tile.price;
-      tile.owned = true;
-      tile.owner = player.playerName;
-      player.properties.push(tile);
-      console.log(player);
+      actionDisplay.innerHTML =
+        "You Landed On Your Own Property, So Nothing Happens.";
+    } else {
+      actionDisplay.innerHTML = `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price} <button onclick="buyProperty()">Yes</button>`;
     }
   }
   showPlayersProperties();
@@ -1241,8 +1359,10 @@ startBtn.addEventListener("click", () => {
   removePlayersFromMiddleOfBoard();
   showPlayersProperties();
   getLastPlayerInArray();
+  disableStartBtn();
 });
 nextBtn.addEventListener("click", function () {
+  enableRollBtn();
   nextPlayerTurn();
   showPlayersProperties();
   resetDiceRoll();
