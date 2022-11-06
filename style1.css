@@ -123,3 +123,6 @@ body {
 .fixed-top {
   background-color: aliceblue;
 }
+#warning {
+  margin-top: 60px;
+}

@@ -676,6 +676,7 @@ const playerNameInput = document.getElementById("player-name-input");
 const setPlayerNameBtn = document.getElementById("set-player-name-button");
 const newGameBtn = document.getElementById("new-game-button");
 const actionDisplay = document.getElementById("action-display");
+const chanceChestDisplay = document.getElementById("chance/chest-display");
 let activePlayers = [];
 let i = 1;
 let activePlayer = {};
@@ -706,7 +707,7 @@ function enableRollBtn() {
 function checkRollDouble(rollA, rollB) {
   if (rollA !== rollB) disableRollBtn();
   else {
-    alert("You Rolled a Double, You Get To Go Again!");
+    diceRollDisplay.innerHTML += "You Rolled a Double, You Get To Go Again!";
   }
 }
 
@@ -845,7 +846,7 @@ function showChanceCard(card) {
   </div>
 </div>
 `;
-  currentPropertyDisplay.innerHTML = displayCard;
+  chanceChestDisplay.innerHTML += displayCard;
 }
 function showCommunityChestCard(card) {
   console.log(card);
@@ -859,7 +860,7 @@ function showCommunityChestCard(card) {
   </div>
 </div>
 `;
-  currentPropertyDisplay.innerHTML = displayCard;
+  chanceChestDisplay.innerHTML += displayCard;
 }
 function showRegularProperty() {
   let {
@@ -1115,7 +1116,9 @@ function buyProperty() {
   showPlayersProperties();
   actionDisplay.innerHTML = "";
 }
-
+function eraseChanceChestDisplay() {
+  chanceChestDisplay.innerHTML = "";
+}
 function resetGame() {
   if (
     confirm(`  WARNING!!!!
@@ -1133,7 +1136,7 @@ function chanceCardActivation(player) {
   console.log(card);
 
   showChanceCard(card);
-  actionDisplay.innerHTML = `${card.name}`;
+  actionDisplay.innerHTML += `You Landed On Chance!`;
   if (card.type === "move") {
     removePlayerFromPosition();
     if (
@@ -1193,9 +1196,8 @@ function chanceCardActivation(player) {
 
 function communityChestCardActivation(player) {
   let card = CommunityChestCards[pickCard(CommunityChestCards)];
-  console.log(card);
   showCommunityChestCard(card);
-  actionDisplay.innerHTML = `${card.name}`;
+  actionDisplay.innerHTML += `You Landed On Community Chest!`;
   if (card.type === "move") {
     removePlayerFromPosition();
     player.position = card.positionToMove;
@@ -1366,6 +1368,7 @@ nextBtn.addEventListener("click", function () {
   nextPlayerTurn();
   showPlayersProperties();
   resetDiceRoll();
+  eraseChanceChestDisplay();
 });
 
 playerNameInput.addEventListener("input", function () {
