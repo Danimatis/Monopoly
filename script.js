@@ -5,7 +5,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: 0,
+    turn: null,
     active: false,
     playerName: null,
   },
@@ -15,7 +15,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: 0,
+    turn: null,
     active: false,
     playerName: null,
   },
@@ -25,7 +25,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: 0,
+    turn: null,
     active: false,
     playerName: null,
   },
@@ -35,7 +35,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: 0,
+    turn: null,
     active: false,
     playerName: null,
   },
@@ -45,7 +45,7 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: 0,
+    turn: null,
     active: false,
     playerName: null,
   },
@@ -55,15 +55,16 @@ const players = [
     position: null,
     money: null,
     properties: [],
-    turn: 0,
+    turn: null,
     active: false,
     playerName: null,
   },
 ];
-const landingTiles = [
+const landingSquares = [
   {
     name: "Mediterranean Avenue",
-    type: "purple",
+    type: "property",
+    color: "indigo",
     price: 60,
     rent: 2,
     oneHouse: 10,
@@ -79,7 +80,8 @@ const landingTiles = [
   },
   {
     name: "Baltic Avenue",
-    type: "purple",
+    color: "indigo",
+    type: "property",
     price: 60,
     rent: 4,
     oneHouse: 20,
@@ -95,7 +97,8 @@ const landingTiles = [
   },
   {
     name: "Oriental Avenue",
-    type: "light blue",
+    type: "property",
+    color: "lightskyblue",
     price: 100,
     rent: 6,
     oneHouse: 30,
@@ -111,7 +114,8 @@ const landingTiles = [
   },
   {
     name: "Vermont Avenue",
-    type: "light blue",
+    color: "lightskyblue",
+    type: "property",
     price: 100,
     rent: 6,
     oneHouse: 30,
@@ -127,7 +131,8 @@ const landingTiles = [
   },
   {
     name: "Connecticut Avenue",
-    type: "light blue",
+    color: "lightskyblue",
+    type: "property",
     price: 120,
     rent: 8,
     oneHouse: 40,
@@ -143,7 +148,8 @@ const landingTiles = [
   },
   {
     name: "St. Charles Place",
-    type: "light purple",
+    type: "property",
+    color: "purple",
     price: 140,
     rent: 10,
     oneHouse: 50,
@@ -159,7 +165,8 @@ const landingTiles = [
   },
   {
     name: "States Avenue",
-    type: "light purple",
+    color: "purple",
+    type: "property",
     price: 140,
     rent: 10,
     oneHouse: 50,
@@ -175,7 +182,8 @@ const landingTiles = [
   },
   {
     name: "Virginia Avenue",
-    type: "light purple",
+    color: "purple",
+    type: "property",
     price: 160,
     rent: 12,
     oneHouse: 60,
@@ -191,7 +199,8 @@ const landingTiles = [
   },
   {
     name: "St. James Avenue",
-    type: "orange",
+    type: "property",
+    color: "orange",
     price: 180,
     rent: 14,
     oneHouse: 70,
@@ -207,7 +216,8 @@ const landingTiles = [
   },
   {
     name: "Tennessee Avenue",
-    type: "orange",
+    color: "orange",
+    type: "property",
     price: 180,
     rent: 14,
     oneHouse: 70,
@@ -223,7 +233,8 @@ const landingTiles = [
   },
   {
     name: "New York Avenue",
-    type: "orange",
+    color: "orange",
+    type: "property",
     price: 200,
     rent: 16,
     oneHouse: 80,
@@ -239,7 +250,8 @@ const landingTiles = [
   },
   {
     name: "Kentucky Avenue",
-    type: "red",
+    type: "property",
+    color: "red",
     price: 220,
     rent: 18,
     oneHouse: 90,
@@ -255,7 +267,8 @@ const landingTiles = [
   },
   {
     name: "Indiana Avenue",
-    type: "red",
+    color: "red",
+    type: "property",
     price: 220,
     rent: 18,
     oneHouse: 90,
@@ -271,7 +284,8 @@ const landingTiles = [
   },
   {
     name: "Illinois Avenue",
-    type: "red",
+    color: "red",
+    type: "property",
     price: 240,
     rent: 20,
     oneHouse: 100,
@@ -287,7 +301,8 @@ const landingTiles = [
   },
   {
     name: "Atlantic Avenue",
-    type: "yellow",
+    type: "property",
+    color: "yellow",
     price: 260,
     rent: 22,
     oneHouse: 110,
@@ -303,7 +318,8 @@ const landingTiles = [
   },
   {
     name: "Ventnor Avenue",
-    type: "yellow",
+    color: "yellow",
+    type: "property",
     price: 260,
     rent: 22,
     oneHouse: 110,
@@ -319,7 +335,8 @@ const landingTiles = [
   },
   {
     name: "Marvin Gardens",
-    type: "yellow",
+    color: "yellow",
+    type: "property",
     price: 280,
     rent: 24,
     oneHouse: 120,
@@ -335,7 +352,8 @@ const landingTiles = [
   },
   {
     name: "Pacific Avenue",
-    type: "green",
+    type: "property",
+    color: "green",
     price: 300,
     rent: 26,
     oneHouse: 130,
@@ -351,7 +369,8 @@ const landingTiles = [
   },
   {
     name: "North Carolina Avenue",
-    type: "green",
+    color: "green",
+    type: "property",
     price: 300,
     rent: 26,
     oneHouse: 130,
@@ -367,7 +386,8 @@ const landingTiles = [
   },
   {
     name: "Pennsylvania Avenue",
-    type: "green",
+    color: "green",
+    type: "property",
     price: 320,
     rent: 28,
     oneHouse: 150,
@@ -383,7 +403,8 @@ const landingTiles = [
   },
   {
     name: "Park Place",
-    type: "blue",
+    type: "property",
+    color: "blue",
     price: 350,
     rent: 35,
     oneHouse: 175,
@@ -399,7 +420,8 @@ const landingTiles = [
   },
   {
     name: "Boardwalk",
-    type: "blue",
+    type: "property",
+    color: "blue",
     price: 400,
     rent: 50,
     oneHouse: 200,
@@ -416,6 +438,7 @@ const landingTiles = [
   {
     name: "Reading Railroad",
     type: "railroad",
+    color: "black",
     price: 200,
     rent: 25,
     twoRailroads: 50,
@@ -429,6 +452,7 @@ const landingTiles = [
   {
     name: "Pennsylvania Railroad",
     type: "railroad",
+    color: "black",
     price: 200,
     rent: 25,
     twoRailroads: 50,
@@ -442,6 +466,7 @@ const landingTiles = [
   {
     name: "B & O Railroad",
     type: "railroad",
+    color: "black",
     price: 200,
     rent: 25,
     twoRailroads: 50,
@@ -455,6 +480,7 @@ const landingTiles = [
   {
     name: "ShortLine",
     type: "railroad",
+    color: "black",
     price: 200,
     rent: 25,
     twoRailroads: 50,
@@ -468,6 +494,7 @@ const landingTiles = [
   {
     name: "Electric Company",
     type: "utility",
+    color: "white",
     price: 150,
     rent: 4,
     twoUtilities: 10,
@@ -479,11 +506,12 @@ const landingTiles = [
   {
     name: "Water Works ",
     type: "utility",
+    color: "white",
     price: 150,
     rent: 4,
     twoUtilities: 10,
     mortgageValue: 75,
-    squareNumber: 13,
+    squareNumber: 29,
     owned: false,
     owner: "",
   },
@@ -506,18 +534,149 @@ const landingTiles = [
   },
   { name: "Luxury Tax", type: "luxury tax", price: 75, squareNumber: 39 },
 ];
+const chanceCards = [
+  { name: "Advance to Boardwalk.", type: "move", positionToMove: 40 },
+  { name: "Advance to GO (Collect $200)", type: "move", positionToMove: 1 },
+  {
+    name: "Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!",
+    type: "move",
+    positionToMove: 11,
+  },
+  {
+    name: "Advance to St. Charles Place. If You Pass Go Collect $200.",
+    type: "move",
+    positionToMove: 12,
+  },
+  {
+    name: "Advance to Illinois Avenue. If You Pass Go Collect $200.",
+    type: "move",
+    positionToMove: 25,
+  },
+  {
+    name: "Take a Trip to Reading Railroad. If You Pass GO Collect $200.",
+    type: "move",
+    positionToMove: 6,
+  },
+  {
+    name: "Advance to Nearest Railroad.  If Unowned, You May Buy it from the Bank. If owned, Pay Owner Twice the Rental to Which They are Otherwise Entitled.",
+    type: "moveToNearestRailroad",
+  },
+  {
+    name: "Advance to Nearest Railroad.  If Unowned, You May Buy it from the Bank. If owned, Pay Owner Twice the Rental to Which They are Otherwise Entitled.",
+    type: "moveToNearestRailroad",
+  },
+  {
+    name: "Advance to Nearest Utility.  If Unowned, You May Buy it from the Bank. If owned, Throw Dice and Pay Owner a Total of Ten Times the Amount Rolled.",
+    type: "moveToNearestUtility",
+  },
+  {
+    name: "Bank Pays You Dividend of $50.",
+    type: "receiveMoney",
+    amountOfMoney: 50,
+  },
+  {
+    name: "Your Building Loan Matures. Collect $150.",
+    type: "receiveMoney",
+    amountOfMoney: 150,
+  },
+  { name: "Get Out of Jail Free." },
+  { name: "Move Back Three Spaces", type: "moveBack", squaresToMove: -3 },
+  {
+    name: "Make General Repairs on all Your playerProperties. For Each House Pay $25. For Each Hotel Pay $100.",
+    type: "paymentOnHouses",
+  },
+  {
+    name: "Speeding Fine $15.",
+    type: "payment",
+    amountOfMoney: 15,
+  },
+  {
+    name: "You Have Been Elected Chairman of the displayBoard. Pay Each Player $50.",
+    type: "paymentToPlayers",
+    amountOfMoney: 50,
+  },
+];
+const CommunityChestCards = [
+  { name: "Advance to GO (Collect $200)", type: "move", positionToMove: 1 },
+  {
+    name: "Bank Error in Your Favor. Collect $200.",
+    type: "receiveMoney",
+    amountOfMoney: 200,
+  },
+  {
+    name: "Doctor's Fee Pay $50.",
+    type: "payment",
+    amountOfMoney: 50,
+  },
+  {
+    name: "From Sale of Stock You Get $50.",
+    type: "receiveMoney",
+    amountOfMoney: 50,
+  },
+  {
+    name: "Holiday Fund Matures. Collect $100",
+    type: "receiveMoney",
+    amountOfMoney: 100,
+  },
+  { name: "Get Out of Jail Free." },
+  {
+    name: "Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!",
+    type: "move",
+    positionToMove: 11,
+  },
+  {
+    name: "Income Tax Refund. Collect $20.",
+    type: "receiveMoney",
+    amountOfMoney: 20,
+  },
+  {
+    name: "It's Your Birthday. Collect $10 From Every Player",
+    type: "receiveMoneyFromPlayers",
+    amountOfMoney: 10,
+  },
+  {
+    name: "Life Insurance Matures. Collect $100.",
+    type: "receiveMoney",
+    amountOfMoney: 100,
+  },
+  { name: "Pay Hospital Fees of $100", type: "payment", amountOfMoney: 100 },
+  { name: "Pay School Fees of $50", type: "payment", amountOfMoney: 50 },
+  {
+    name: "Receive $25 as a Consultancy Fee",
+    type: "receiveMoney",
+    amountOfMoney: 25,
+  },
+  {
+    name: "You are Assessed for Street Repair. For Each House Pay $40. For Each Hotel Pay $115.",
+    type: "paymentOnHouses",
+  },
+  {
+    name: "You Have Won Second Prize in a Beauty Contest. Collect $10",
+    type: "receiveMoney",
+    amountOfMoney: 10,
+  },
+  {
+    name: "You Inherit $100",
+    type: "receiveMoney",
+    amountOfMoney: 100,
+  },
+];
 const body = document.querySelector("body");
 const goSquare = document.getElementById("corner-right-bottom");
 const diceRollDisplay = document.getElementById("dice-roll-display");
 const rollBtn = document.getElementById("roll-button");
 const startBtn = document.getElementById("start-button");
 const nextBtn = document.getElementById("next-button");
-const displayBoard = document.querySelector(".display-of-ongoing-events");
-const showPropertyBtn = document.getElementById("show-players-properties");
+const displayBoard = document.querySelector(".display-of-current-player");
+const currentPropertyDisplay = document.getElementById(
+  "current-property-display"
+);
 const playerProperties = document.getElementById("player-properties");
 const playerNameInput = document.getElementById("player-name-input");
+const setPlayerNameBtn = document.getElementById("set-player-name-button");
 const newGameBtn = document.getElementById("new-game-button");
-
+const actionDisplay = document.getElementById("action-display");
+const chanceChestDisplay = document.getElementById("chance/chest-display");
 let activePlayers = [];
 let i = 1;
 let activePlayer = {};
@@ -536,23 +695,28 @@ function choosePlayer(character) {
     }
   }
 }
+function disableStartBtn() {
+  startBtn.disabled = "true";
+}
+function disableRollBtn() {
+  rollBtn.disabled = "true";
+}
+function enableRollBtn() {
+  rollBtn.disabled = false;
+}
+function checkRollDouble(rollA, rollB) {
+  if (rollA !== rollB) disableRollBtn();
+  else {
+    diceRollDisplay.innerHTML += "You Rolled a Double, You Get To Go Again!";
+  }
+}
 
 function placePlayer(player) {
   goSquare.innerHTML += `<img class="active-players" src=${player.image}></img>`;
 }
 
-function askForName() {
-  let name = prompt("What's Your Name");
-  return name;
-}
-
-function setNameOfPlayer(character) {
-  for (const player of players) {
-    if (character === player.name) {
-      player.playerName = askForName();
-    }
-  }
-  console.log(player.playerName);
+function settNameOfPlayer(player) {
+  player.playerName = playerNameInput.value;
 }
 
 function showRoll(roll) {
@@ -560,7 +724,10 @@ function showRoll(roll) {
 }
 
 function rollDice() {
-  let roll = Math.ceil(Math.random() * 6) + Math.ceil(Math.random() * 6);
+  let rollA = Math.ceil(Math.random() * 6);
+  let rollB = Math.ceil(Math.random() * 6);
+  checkRollDouble(rollA, rollB);
+  let roll = rollA + rollB;
   return roll;
 }
 function resetDiceRoll() {
@@ -582,7 +749,6 @@ function setArrayOfActivePlayers() {
 }
 
 function removePlayersFromMiddleOfBoard() {
-  // center.removeChild(displayBoard);
   displayBoard.innerHTML = "";
 }
 
@@ -595,10 +761,6 @@ function findActivePlayer() {
 }
 function activateTurn(player) {
   player.active = true;
-}
-
-function showActivePlayer(player) {
-  displayBoard.innerHTML = `<h1>It's ${player.playerName}'s Turn</h1>`;
 }
 
 function nextPlayerTurn() {
@@ -615,36 +777,35 @@ function nextPlayerTurn() {
     console.log(activePlayers);
   }
 }
-
+function removePlayerFromPosition() {
+  let player = findActivePlayer();
+  let squarePosition = document.querySelector(
+    `div[data-id="${player.position}"]`
+  );
+  let imageToRemove = document.querySelector(
+    `.active-players[src="${player.image}"]`
+  );
+  try {
+    squarePosition.removeChild(imageToRemove);
+  } catch (error) {
+    console.log(squarePosition);
+  }
+}
 function changePositionOfPlayer(roll) {
   let player = findActivePlayer();
-  let squarePosition = document.querySelector(
-    `div[data-id="${player.position}"]`
-  );
-  console.log(squarePosition);
-  let imageToRemove = document.querySelector(`img[src="${player.image}"]`);
-  console.log(imageToRemove);
-  squarePosition.removeChild(imageToRemove);
-  player.position += roll;
-  if (player.position > 40) {
-    player.position = player.position - 40;
+  removePlayerFromPosition();
+  if (roll) {
+    player.position += roll;
+    if (player.position > 40) {
+      player.position = player.position - 40;
+      player.money += 200;
+    }
   }
-  movePlayer(player);
+  movePlayer();
 }
 
-function goToJail() {
+function movePlayer() {
   let player = findActivePlayer();
-  let squarePosition = document.querySelector(
-    `div[data-id="${player.position}"]`
-  );
-  let imageToRemove = document.querySelector(`img[src="${player.image}"]`);
-  squarePosition.removeChild(imageToRemove);
-  player.position = 11;
-  movePlayer(player);
-}
-
-function movePlayer(player) {
-  // let position = player.position;
   let squarePosition = document.querySelector(
     `div[data-id="${player.position}"]`
   );
@@ -653,55 +814,270 @@ function movePlayer(player) {
 
 function checkPropertyLandedOn() {
   let player = findActivePlayer();
-  for (const tile of landingTiles) {
-    if (tile.squareNumber === player.position) {
-      return tile;
+  for (const square of landingSquares) {
+    if (square.squareNumber === player.position) {
+      return square;
     }
-  }
-}
-function interactWithLandingSquare() {
-  let tile = checkPropertyLandedOn();
-  let player = findActivePlayer();
-  if (tile.owned) {
-    alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
-    player.money = player.money - tile.rent;
-    for (const player of activePlayers) {
-      if (player.playerName === tile.owner) {
-        player.money += tile.rent;
-      }
-    }
-  } else if (confirm(`Do You Want To Buy ${tile.name}`)) {
-    player.money = player.money - tile.price;
-    tile.owned = true;
-    tile.owner = player.playerName;
-    player.properties.push(tile);
-    console.log(player);
   }
 }
 
+function getLastPlayerInArray() {
+  return activePlayers[activePlayers.length - 1];
+}
+
+function showTileLandedOn(card) {
+  let property = checkPropertyLandedOn();
+  if (property.type === "railroad") {
+    showRailroad();
+  } else if (property.type === "utility") {
+    showUtility();
+  } else if (property.type === "property") {
+    showRegularProperty();
+  }
+}
+function showChanceCard(card) {
+  console.log(card);
+  let displayCard = `
+<div class="card" style="width: 18rem; background-color: orange"">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">Chance Card</h6>
+    <p class="card-text">${card.name}.</p>
+
+  </div>
+</div>
+`;
+  chanceChestDisplay.innerHTML += displayCard;
+}
+function showCommunityChestCard(card) {
+  console.log(card);
+
+  let displayCard = `
+<div class="card" style="width: 18rem; background-color: yellow"">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">Community Chest Card</h6>
+    <p class="card-text">${card.name}.</p>
+
+  </div>
+</div>
+`;
+  chanceChestDisplay.innerHTML += displayCard;
+}
+function showRegularProperty() {
+  let {
+    name,
+    color,
+    price,
+    rent,
+    hotel,
+    oneHouse,
+    twoHouses,
+    threeHouses,
+    fourHouses,
+    buildingCosts,
+    mortgageValue,
+  } = checkPropertyLandedOn();
+
+  let card = `
+        <div class="card" style="width: 18rem;">
+          <div class="card-header text-center" style="background:${color}; color:white" >
+            ${name}
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Price $${price}</li>
+            <li class="list-group-item">Rent $${rent}</li>
+            <li class="list-group-item">With One House: $${oneHouse}</li>
+            <li class="list-group-item">With Two Houses: $${twoHouses}</li>
+            <li class="list-group-item">With Three Houses: $${threeHouses}</li>
+            <li class="list-group-item">With Four Houses: $${fourHouses}</li>
+            <li class="list-group-item">With Hotel: $${hotel}</li>
+            <li class="list-group-item">To Buy a House Costs: $${buildingCosts} Per House</li>
+            <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+          </ul>
+        </div>
+     `;
+  currentPropertyDisplay.innerHTML = card;
+}
+function showRailroad() {
+  let {
+    name,
+    color,
+    price,
+    rent,
+    twoRailroads,
+    threeRailroads,
+    fourRailroads,
+    mortgageValue,
+  } = checkPropertyLandedOn();
+  let card = `
+  <div class="card" style="width: 18rem;">
+    <div class="card-header text-center" style="background:${color}; color:white" >
+      ${name}
+    </div>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">Price $${price}</li>
+      <li class="list-group-item">Rent $${rent}</li>
+      <li class="list-group-item">With Two Railroads Owned: $${twoRailroads}</li>
+      <li class="list-group-item">With Three Railroads Owned: $${threeRailroads}</li>
+      <li class="list-group-item">With Four Railroads Owned: $${fourRailroads}</li>
+      <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+    </ul>
+  </div>
+`;
+  currentPropertyDisplay.innerHTML = card;
+}
+function showUtility() {
+  let { color, name, price, rent, twoUtilities, mortgageValue } =
+    checkPropertyLandedOn();
+  let card = `
+  <div class="card" style="width: 18rem;">
+    <div class="card-header text-center" style="background:${color}; color:black" >
+      ${name}
+    </div>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">Price $${price}</li>
+      <li class="list-group-item">If One Utility is Owned Rent is ${rent} Times the Amount Rolled</li>
+      <li class="list-group-item">If Both Utilities are Owned Rent is ${twoUtilities} Times the Amount Rolled</li>
+     
+      <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+    </ul>
+  </div>
+`;
+  currentPropertyDisplay.innerHTML = card;
+}
+function resetPropertyLandedOn() {
+  currentPropertyDisplay.innerHTML = "";
+}
 function getAllPropertiesOfPlayer(player) {
-  let properties = "<ul>";
+  let properties = `<ul>`;
+  let propertyId = "a";
   if (player.properties) {
     for (const property of player.properties) {
-      properties += `<li>${property.name}</li>`;
+      if (property.type === "property") {
+        let {
+          name,
+          color,
+          price,
+          rent,
+          hotel,
+          oneHouse,
+          twoHouses,
+          threeHouses,
+          fourHouses,
+          buildingCosts,
+          mortgageValue,
+        } = property;
+        properties += `<li data-bs-toggle="modal" data-bs-target="#${propertyId}">${name} </li> 
+      <div class="modal fade" id="${propertyId}" tabindex="-1" aria-labelledby="${propertyId}Label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="card">
+              <div class="card-header text-center" style="background:${color}; color:white" >
+                ${name}
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Rent $${rent}</li>
+                <li class="list-group-item">With One House: $${oneHouse}</li>
+                <li class="list-group-item">With Two Houses: $${twoHouses}</li>
+                <li class="list-group-item">With Three Houses: $${threeHouses}</li>
+                <li class="list-group-item">With Four Houses: $${fourHouses}</li>
+                <li class="list-group-item">With Hotel: $${hotel}</li>
+                <li class="list-group-item">To Buy a House Costs: $${buildingCosts} Per House</li>
+                <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+      } else if (property.type === "railroad") {
+        let {
+          name,
+          color,
+          price,
+          rent,
+          twoRailroads,
+          threeRailroads,
+          fourRailroads,
+          mortgageValue,
+        } = property;
+        properties += `<li data-bs-toggle="modal" data-bs-target="#${propertyId}">${name} </li> 
+        <div class="modal fade" id="${propertyId}" tabindex="-1" aria-labelledby="${propertyId}Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="card">
+                <div class="card-header text-center" style="background:${color}; color:white" >
+                  ${name}
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Price $${price}</li>
+                <li class="list-group-item">Rent $${rent}</li>
+                <li class="list-group-item">With Two Railroads Owned: $${twoRailroads}</li>
+                <li class="list-group-item">With Three Railroads Owned: $${threeRailroads}</li>
+                <li class="list-group-item">With Four Railroads Owned: $${fourRailroads}</li>
+                <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+              </ul>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+          `;
+      } else if (property.type === "utility") {
+        let { color, name, price, rent, twoUtilities, mortgageValue } =
+          property;
+        properties += `<li data-bs-toggle="modal" data-bs-target="#${propertyId}">${name} </li> 
+        <div class="modal fade" id="${propertyId}" tabindex="-1" aria-labelledby="${propertyId}Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="card">
+                <div class="card-header text-center" style="background:${color}; color:black" >
+                  ${name}
+                </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Price $${price}</li>
+                <li class="list-group-item">If One Utility is Owned Rent is ${rent} Times the Amount Rolled</li>
+                <li class="list-group-item">If Both Utilities are Owned Rent is ${twoUtilities} Times the Amount Rolled</li>
+                <li class="list-group-item">Mortgage: $${mortgageValue}</li>
+              </ul> </div>
+              </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+                
+                `;
+      }
+
+      propertyId += 1;
     }
   }
   properties += `</ul>`;
   return properties;
 }
 function showPlayersProperties() {
-  for (const player of activePlayers) {
-    playerProperties.innerHTML += `<div class="card" style="width: 18rem">
+  const player = findActivePlayer();
+  displayBoard.innerHTML = `<div class="card" style="width: 18rem;">
+     
   <div class="card-body">
-    <h5 class="card-title">
-    ${player.playerName} <img src="${player.image}" alt="" />
-    </h5>
-    <h6>Money: $${player.money} </h6>
-    <h6>Properties:</h6>
-    ${getAllPropertiesOfPlayer(player)}
+    <h5 class="card-title">It's ${player.playerName} Turn<img src=${
+    player.image
+  }  alt=""></h5>
+    
   </div>
-</div>`;
-  }
+  Money: $${player.money}<br>
+  Properties:
+  ${getAllPropertiesOfPlayer(player)}`;
 }
 
 function findFreeParking() {
@@ -711,95 +1087,38 @@ function findFreeParking() {
     }
   }
 }
-function process() {
-  let tile = checkPropertyLandedOn();
+function incomeTaxYes() {
   let player = findActivePlayer();
-  if (tile.type === "chance") {
-  } else if (tile.type === "chest") {
-  } else if (tile.type === "go") {
-    displayBoard.innerHTML += `You Just Landed on GO, receive $400!!`;
-    player.money += 400;
-  } else if (tile.type === "go to jail") {
-    displayBoard.innerHTML += `Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!`;
-    goToJail();
-  } else if (tile.type === "parking") {
-    displayBoard.innerHTML += `WOW, You Are Lucky, You get $${tile.money} From the Pot`;
-    player.money += tile.money;
-    tile.money = 500;
-  } else if (tile.type === "jail") {
-    displayBoard.innerHTML += "Just Visiting";
-  } else if (tile.type === "luxury tax") {
-    displayBoard.innerHTML += `Landed on Luxury Tax, Pay to the Pot $75`;
-    player.money -= 75;
-    findFreeParking().money += 75;
-  } else if (tile.type === "income tax") {
-    if (
-      confirm(
-        `Landed on Income Tax, If You wish to Pay $200,  Click OK, If You Want to Pay 10% of Your Money, Click Cancel`
-      )
-    ) {
-      player.money -= tile.priceA;
-      alert(`You Paid $200`);
-    } else {
-      player.money += Math.floor(player.money * tile.priceB);
-      alert(`You Paid $${-Math.floor(player.money * tile.priceB)}`);
-    }
-  } else if (tile.type === "utility") {
-  } else if (tile.type === "railroad") {
-    if (tile.owned) {
-      alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
-      player.money = player.money - tile.rent;
-      for (const player of activePlayers) {
-        if (player.playerName === tile.owner) {
-          player.money += tile.rent;
-        }
-      }
-    } else if (
-      confirm(
-        `You Just Landed On ${tile.name}. Do You Want To Buy ${tile.name}?`
-      )
-    ) {
-      player.money = player.money - tile.price;
-      tile.owned = true;
-      tile.owner = player.playerName;
-      player.properties.push(tile);
-      console.log(player);
-    }
-  } else {
-    if (tile.owned) {
-      alert(`${player.playerName} owes ${tile.rent} to ${tile.owner}`);
-      player.money = player.money - tile.rent;
-      for (const player of activePlayers) {
-        if (player.playerName === tile.owner) {
-          player.money += tile.rent;
-        }
-      }
-    } else if (confirm(`Do You Want To Buy ${tile.name}`)) {
-      player.money = player.money - tile.price;
-      tile.owned = true;
-      tile.owner = player.playerName;
-      player.properties.push(tile);
-      console.log(player);
-    }
-  }
-  renderPlayerCards();
-}
-function renderPlayerCards() {
-  playerProperties.innerHTML = "";
-  for (const player of activePlayers) {
-    playerProperties.innerHTML += `<div class="card" style="width: 18rem">
-      <div class="card-body">
-        <h5 class="card-title">
-        ${player.playerName} <img src="${player.image}" alt="" />
-        </h5>
-        <h6>Money: $${player.money} </h6>
-        <h6>Properties:</h6>
-        ${getAllPropertiesOfPlayer(player)}
-      </div>
-    </div>`;
-  }
+  let tile = checkPropertyLandedOn();
+
+  player.money -= tile.priceA;
+  actionDisplay.innerHTML = `You Paid $200`;
+  showPlayersProperties();
 }
 
+function incomeTaxNo() {
+  let player = findActivePlayer();
+  let tile = checkPropertyLandedOn();
+  player.money += Math.floor(player.money * tile.priceB);
+  actionDisplay.innerHTML = `You Paid $${-Math.floor(
+    player.money * tile.priceB
+  )}`;
+  showPlayersProperties();
+}
+
+function buyProperty() {
+  let player = findActivePlayer();
+  let tile = checkPropertyLandedOn();
+  player.money = player.money - tile.price;
+  tile.owned = true;
+  tile.owner = player.playerName;
+  player.properties.push(tile);
+  showPlayersProperties();
+  actionDisplay.innerHTML = "";
+}
+function eraseChanceChestDisplay() {
+  chanceChestDisplay.innerHTML = "";
+}
 function resetGame() {
   if (
     confirm(`  WARNING!!!!
@@ -808,33 +1127,252 @@ function resetGame() {
     document.location.reload();
   }
 }
+function pickCard(deck) {
+  let cardIndex = Math.floor(Math.random() * deck.length);
+  return cardIndex;
+}
+function chanceCardActivation(player) {
+  let card = chanceCards[pickCard(chanceCards)];
+  console.log(card);
 
+  showChanceCard(card);
+  actionDisplay.innerHTML += `You Landed On Chance!`;
+  if (card.type === "move") {
+    removePlayerFromPosition();
+    if (
+      (card.positionToMove < player.position && card.positionToMove !== 11) ||
+      (card.positionToMove < player.position && card.positionToMove !== 1)
+    ) {
+      actionDisplay.innerHTML = `You Passed Go Collect $200`;
+      player.money += 200;
+    }
+    player.position = card.positionToMove;
+    movePlayer();
+    process();
+  } else if (card.type === "moveToNearestRailroad") {
+    removePlayerFromPosition();
+    let positionToMove = findNearestRailroadPosition(player);
+    if (positionToMove < player.position) {
+      actionDisplay.innerHTML = `You Passed Go Collect $200`;
+      player.money += 200;
+    }
+    player.position = positionToMove;
+    movePlayer();
+    process();
+  } else if (card.type === "moveToNearestUtility") {
+    removePlayerFromPosition();
+    let positionToMove = findNearestUtilityPosition(player);
+    if (positionToMove < player.position) {
+      actionDisplay.innerHTML = `You Passed Go Collect $200`;
+      player.money += 200;
+    }
+    player.position = positionToMove;
+    movePlayer();
+    process();
+  } else if (card.type === "receiveMoney") {
+    player.money += card.amountOfMoney;
+  } else if (card.type === "moveBack") {
+    removePlayerFromPosition();
+    player.position += card.squaresToMove;
+    movePlayer();
+    process();
+  } else if (card.type === "paymentOnHouses") {
+    let housesFee = findHousesOfPlayer(player) * 25;
+    let hotelFee = findHotelsOfPlayer(player) * 100;
+    let fine = housesFee + hotelFee;
+    if (fine) {
+      player.money -= fine;
+    }
+  } else if (card.type === "payment") {
+    player.money += card.amountOfMoney;
+  } else if (card.type === "paymentToPlayers") {
+    for (const onePlayer of activePlayers) {
+      onePlayer.money += 50;
+      player.money -= 50;
+    }
+  } else if ((card.name = "Get Out of Jail Free.")) {
+  }
+}
+
+function communityChestCardActivation(player) {
+  let card = CommunityChestCards[pickCard(CommunityChestCards)];
+  showCommunityChestCard(card);
+  actionDisplay.innerHTML += `You Landed On Community Chest!`;
+  if (card.type === "move") {
+    removePlayerFromPosition();
+    player.position = card.positionToMove;
+    movePlayer();
+    process();
+  } else if (card.type === "receiveMoney") {
+    player.money += card.amountOfMoney;
+  } else if (card.type === "paymentOnHouses") {
+    let housesFee = findHousesOfPlayer(player) * 40;
+    let hotelFee = findHotelsOfPlayer(player) * 115;
+    let fine = housesFee + hotelFee;
+    if (fine) {
+      player.money -= fine;
+    }
+    player.money -= fine;
+  } else if (card.type === "payment") {
+    player.money += card.amountOfMoney;
+  } else if (card.type === "receiveMoneyFromPlayers") {
+    for (const onePlayer of activePlayers) {
+      onePlayer.money -= 10;
+      player.money += 10;
+    }
+  } else if (card.name === "Get Out of Jail Free.") {
+  }
+}
+function addHouse() {}
+function addHotel() {}
+function findHousesOfPlayer() {}
+function findHotelsOfPlayer() {}
+
+function findNearestRailroadPosition(player) {
+  if (player.position > 26) {
+    return 6;
+  }
+  for (const railroad of landingSquares) {
+    if (railroad.squareNumber > player.position) {
+      return railroad.squareNumber;
+    }
+  }
+}
+function findNearestUtilityPosition(player) {
+  if (player.position > 29) {
+    return 13;
+  }
+  for (const tile of landingSquares) {
+    if (tile.type === "utility") {
+      if (title.squareNumber > player.position) {
+        return tile.squareNumber;
+      }
+    }
+  }
+}
+function goToJail() {
+  let player = findActivePlayer();
+  let squarePosition = document.querySelector(
+    `div[data-id="${player.position}"]`
+  );
+  let imageToRemove = document.querySelector(
+    `.active-players[src="${player.image}"]`
+  );
+
+  squarePosition.removeChild(imageToRemove);
+  player.position = 11;
+  movePlayer();
+}
+
+function process() {
+  let tile = checkPropertyLandedOn();
+  let player = findActivePlayer();
+  if (tile.type === "chance") {
+    chanceCardActivation(player);
+  } else if (tile.type === "chest") {
+    communityChestCardActivation(player);
+  } else if (tile.type === "go") {
+    actionDisplay.innerHTML = `You Just Landed on GO, receive $400!!`;
+    player.money += 200;
+  } else if (tile.type === "go to jail") {
+    actionDisplay.innerHTML = `Go Straight to Jail, Do NOT Pass GO, Do NOT Collect $200!`;
+    goToJail();
+  } else if (tile.type === "parking") {
+    actionDisplay.innerHTML = `WOW, You Are Lucky, You get $${tile.money} From the Pot`;
+    player.money += tile.money;
+    tile.money = 500;
+  } else if (tile.type === "jail") {
+    actionDisplay.innerHTML = "Just Visiting";
+  } else if (tile.type === "luxury tax") {
+    actionDisplay.innerHTML = `Landed on Luxury Tax, Pay to the Pot $75`;
+    player.money -= 75;
+    findFreeParking().money += 75;
+  } else if (tile.type === "income tax") {
+    actionDisplay.innerHTML = `Landed on Income Tax, If You wish to Pay $200,  Click OK, If You Want to Pay 10% of Your Money, Click Cancel <button onclick="incomeTaxYes()">Yes</button> <button onclick="incomeTaxNo()">No</button>`;
+  } else if (tile.type === "utility") {
+    if (tile.owned && tile.owner !== player.playerName) {
+      actionDisplay.innerHTML = `${player.playerName} owes ${tile.rent} to ${tile.owner}`;
+      player.money = player.money - tile.rent;
+      for (const player of activePlayers) {
+        if (player.playerName === tile.owner) {
+          player.money += tile.rent;
+        }
+      }
+    } else if (tile.owned && tile.owner === player.playerName) {
+      actionDisplay.innerHTML =
+        "You Landed On Your Own Property, So Nothing Happens.";
+    } else {
+      actionDisplay.innerHTML = `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price} <button onclick="buyProperty()">Yes</button>`;
+    }
+  } else if (tile.type === "railroad") {
+    if (tile.owned && tile.owner !== player.playerName) {
+      actionDisplay.innerHTML = `${player.playerName} owes ${tile.rent} to ${tile.owner}`;
+      player.money = player.money - tile.rent;
+      for (const player of activePlayers) {
+        if (player.playerName === tile.owner) {
+          player.money += tile.rent;
+        }
+      }
+    } else if (tile.owned && tile.owner === player.playerName) {
+      actionDisplay.innerHTML =
+        "You Landed On Your Own Property, So Nothing Happens.";
+    } else {
+      actionDisplay.innerHTML = `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price} <button onclick="buyProperty()">Yes</button>`;
+    }
+  } else {
+    if (tile.owned && tile.owner !== player.playerName) {
+      actionDisplay.innerHTML = `${player.playerName} owes ${tile.rent} to ${tile.owner}`;
+      player.money = player.money - tile.rent;
+      for (const player of activePlayers) {
+        if (player.playerName === tile.owner) {
+          player.money += tile.rent;
+        }
+      }
+    } else if (tile.owned && tile.owner === player.playerName) {
+      actionDisplay.innerHTML =
+        "You Landed On Your Own Property, So Nothing Happens.";
+    } else {
+      actionDisplay.innerHTML = `You Just Landed On ${tile.name}. Do You Want To Buy It? The Cost is $${tile.price} <button onclick="buyProperty()">Yes</button>`;
+    }
+  }
+  showPlayersProperties();
+}
 displayBoard.addEventListener("click", function (e) {
   try {
     choosePlayer(e.target.closest("img[data-name]").dataset.name);
     removeCharacterFromPickList(
       e.target.closest("img[data-name]").dataset.name
     );
-    setNameOfPlayer(e.target.closest("img[data-name]").dataset.name);
+    setArrayOfActivePlayers();
   } catch (error) {}
 });
 
 rollBtn.addEventListener("click", function () {
   let roll = rollDice();
+  resetPropertyLandedOn();
   showRoll(roll);
   changePositionOfPlayer(roll);
-  setTimeout(process, 500);
+  showTileLandedOn();
+  process();
 });
 
 startBtn.addEventListener("click", () => {
   setArrayOfActivePlayers();
   removePlayersFromMiddleOfBoard();
-  showActivePlayer(findActivePlayer());
   showPlayersProperties();
+  getLastPlayerInArray();
+  disableStartBtn();
 });
 nextBtn.addEventListener("click", function () {
+  enableRollBtn();
   nextPlayerTurn();
-  showActivePlayer(findActivePlayer());
+  showPlayersProperties();
   resetDiceRoll();
+  eraseChanceChestDisplay();
+});
+
+playerNameInput.addEventListener("input", function () {
+  const player = getLastPlayerInArray();
+  settNameOfPlayer(player);
 });
 newGameBtn.addEventListener("click", resetGame);
